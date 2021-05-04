@@ -3,24 +3,26 @@ from backend.util import config
 
 
 def main():
+
+    key = config.load_key()
     encrypt_or_decrypt = input(
         "Are you looking to 'encrypt', or 'decrypt'? \nif seeking to create first time key then enter 'key' as your input\n"
     )
+    file_or_folder = input("(file) or (folder):\n")
     if encrypt_or_decrypt == 'encrypt':
-        choice = input(
-            "What do you want to encrypt? \n (1) -Single File  (2) -Directory of files \n")
-        if choice == '1':
-            encrypt.encrypt_file()
-        elif choice == '2':
-            encrypt.encrypt_folder()
+        if file_or_folder == 'file':
+            file = config.load_file()
+            encrypt.encrypt_file(key, file)
+        elif file_or_folder == 'folder':
+            file = config.load_directory
+            encrypt.encrypt_folder(key, file)
     elif encrypt_or_decrypt == 'decrypt':
-        choice = input(
-            "What do you want to decrypt? \n (1) -Single File  (2) -Directory of files \n"
-        )
-        if choice == '1':
-            encrypt.decrypt_file()
-        elif choice == '2':
-            encrypt.decrypt_folder()
+        if file_or_folder == 'file':
+            file = config.load_file()
+            decrypt.decrypt_file(key, file)
+        elif file_or_folder == 'folder':
+            file = config.load_file()
+            decrypt.decrypt_folder(key, file)
     elif encrypt_or_decrypt == 'key':
         config.write_key()
 
